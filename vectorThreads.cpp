@@ -45,25 +45,27 @@ void main()
 		/*else
 			threads = imageFiles.size();*/
 
-	int THREAD_COUNT = imageFiles.size()/threads; //find the best thread divisor
+	int THREAD_COUNT = threads; //find the best number divided by the vector size
 	//cout << "There are " << THREAD_COUNT << " files per thread count\n";
-
-	//thread myThreads[2];
+	
+	//thread myThreads[5]; //make 5 threads
 	thread* myThreads = new thread[THREAD_COUNT];
 
 	int lowLimit = 0;
-
 	//upperLimit = 2
-	int upperLimit = THREAD_COUNT;
+	int upperLimit = imageFiles.size() / threads; // 10 / 5 = 2
 
-	for (int i = 0; i < THREAD_COUNT; i++) //from 0 2
+	for (int i = 0; i < THREAD_COUNT; i++) //from 0 to 2
 	{
-		*myThreads = thread(count, lowLimit, upperLimit); //from 0 
+		*myThreads = thread(count, lowLimit, upperLimit); //from [0] to [1]
 		cout << "\n\n";
 		myThreads->join();
 
+		//move onto the next thread
 		myThreads++;
-		lowLimit += THREAD_COUNT;
-		upperLimit += THREAD_COUNT;
+
+		//lowLimit = 
+		/*lowLimit += THREAD_COUNT;
+		upperLimit += THREAD_COUNT;*/
 	}
 }
