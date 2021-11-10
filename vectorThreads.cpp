@@ -35,36 +35,36 @@ void main()
 	threads.push_back(10);
 
 	int maxNum = 50;
-	for (int i = 2; i < maxNum; i++) //avoid dividing the number by 1 and itself, continue up from 2
-		if (threads.size() % i == 0)
+	for (int i = 2; i < maxNum; i++) //avoid dividing the number by 1, continue up from 2
+		//if the remainder of a number divided by the thread size is 0
+		//also making sure it doesn't divide by itself
+		if (threads.size() % i == 0 && i != threads.size())
+		{
 			countFactor = i;
-		else
-			countFactor = threads.size();
+			cout << i;
+			cout << "\n";
+		}
+	cout << "\n\n";
+		//else
+		//	countFactor = threads.size();
 
 	int THREAD_COUNT = threads.size()/countFactor; //find the best thread divisor
+	cout << THREAD_COUNT << "\n";
+
 	thread* myThreads = new thread[THREAD_COUNT];
 	int lowLimit = 0; //good
 	int upperLimit = THREAD_COUNT;
 
 	for (int i = 0; i < THREAD_COUNT; i++) //from 0 to thread divisor
 	{
-		*myThreads = thread(count, lowLimit, upperLimit); //from 0 
-		myThreads->join();
+		//*myThreads = thread(count, lowLimit, upperLimit); //from 0 
+		//myThreads->join();
 
-		myThreads++;
-		lowLimit += THREAD_COUNT;
-		upperLimit += THREAD_COUNT;
+		//myThreads++;
+		//lowLimit += THREAD_COUNT;
+		//upperLimit += THREAD_COUNT;
+		cout << threads[i];
 	}
-
-	//for (int i = 0; i < THREAD_COUNT; i++) //from 0 to thread divisor
-	//{
-	//	*myThreads = thread(count, lowLimit, upperLimit); //from 0 
-	//	myThreads->join();
-
-	//	myThreads++;
-	//	lowLimit += THREAD_COUNT;
-	//	upperLimit += THREAD_COUNT;
-	//}
 
 	//delete[] myThreads;
 }
