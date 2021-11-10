@@ -7,8 +7,8 @@ using std::cout;
 using std::thread;
 using std::vector;
 
-vector<int> threads;
-int countFactor;
+vector<int> imageFiles;
+int threads;
 
 std::mutex dataLock;
 void count(const int pLowerLimit, const int pUpperLimit)
@@ -16,55 +16,54 @@ void count(const int pLowerLimit, const int pUpperLimit)
 	dataLock.lock();
 	for (int i = pLowerLimit; i < pUpperLimit; i++)
 	{
-		cout << threads[i] << "\n";
+		cout << imageFiles[i] << "\n";
 	}
 	dataLock.unlock();
 }
 
 void main()
 {
-	threads.push_back(1);
-	threads.push_back(2);
-	threads.push_back(3);
-	threads.push_back(4);
-	threads.push_back(5);
-	threads.push_back(6);
-	threads.push_back(7);
-	threads.push_back(8);
-	threads.push_back(9);
-	threads.push_back(10);
+	imageFiles.push_back(1);
+	imageFiles.push_back(2);
+	imageFiles.push_back(3);
+	imageFiles.push_back(4);
+	imageFiles.push_back(5);
+	imageFiles.push_back(6);
+	imageFiles.push_back(7);
+	imageFiles.push_back(8);
+	imageFiles.push_back(9);
+	imageFiles.push_back(10);
 
 	int maxNum = 50;
 	for (int i = 2; i < maxNum; i++) //avoid dividing the number by 1, continue up from 2
 		//if the remainder of a number divided by the thread size is 0
 		//also making sure it doesn't divide by itself
-		if (threads.size() % i == 0 && i != threads.size())
+		if (imageFiles.size() % i == 0 && i != imageFiles.size())
 		{
-			countFactor = i;
-			cout << i;
-			cout << "\n";
+			threads = i;
 		}
-	cout << "\n\n";
-		//else
-		//	countFactor = threads.size();
+		/*else
+			threads = imageFiles.size();*/
 
-	int THREAD_COUNT = threads.size()/countFactor; //find the best thread divisor
-	cout << THREAD_COUNT << "\n";
+	int THREAD_COUNT = imageFiles.size()/threads; //find the best thread divisor
+	//cout << "There are " << THREAD_COUNT << " files per thread count\n";
 
+	//thread myThreads[2];
 	thread* myThreads = new thread[THREAD_COUNT];
-	int lowLimit = 0; //good
+
+	int lowLimit = 0;
+
+	//upperLimit = 2
 	int upperLimit = THREAD_COUNT;
 
-	for (int i = 0; i < THREAD_COUNT; i++) //from 0 to thread divisor
+	for (int i = 0; i < THREAD_COUNT; i++) //from 0 2
 	{
-		//*myThreads = thread(count, lowLimit, upperLimit); //from 0 
-		//myThreads->join();
+		*myThreads = thread(count, lowLimit, upperLimit); //from 0 
+		cout << "\n\n";
+		myThreads->join();
 
-		//myThreads++;
-		//lowLimit += THREAD_COUNT;
-		//upperLimit += THREAD_COUNT;
-		cout << threads[i];
+		myThreads++;
+		lowLimit += THREAD_COUNT;
+		upperLimit += THREAD_COUNT;
 	}
-
-	//delete[] myThreads;
 }
