@@ -33,28 +33,31 @@ void main()
 	imageFiles.push_back(8);
 	imageFiles.push_back(9);
 	imageFiles.push_back(10);
-	imageFiles.push_back(1);
-	imageFiles.push_back(2);
-	imageFiles.push_back(3);
-	imageFiles.push_back(4);
-	imageFiles.push_back(5);
-	imageFiles.push_back(6);
-	imageFiles.push_back(7);
-	imageFiles.push_back(8);
-	imageFiles.push_back(9);
-	imageFiles.push_back(10);
+
 
 	int maxNum = 50;
-	for (int i = 2; i < maxNum; i++) //avoid dividing the number by 1, continue up from 2
-		//if the remainder of a number divided by the thread size is 0
-		//also making sure it doesn't divide by itself
-		if (imageFiles.size() % i == 0 && i != imageFiles.size())
+	if (imageFiles.size() % 2 == 0) //the number is even
+		for (int i = 2; i < maxNum; i++) //avoid dividing the number by 1, continue up from 2
 		{
-			threads = i;
-			cout << threads << "\n\n";
+			//if the remainder of a number divided by the thread size is 0
+			//also making sure it doesn't divide by itself, or by 2
+			if (imageFiles.size() % i == 0 && i != imageFiles.size() && i != imageFiles.size() / 2)
+			{
+				threads = i;
+				cout << threads << "\n\n";
+			}
 		}
-		/*else if (imageFiles.size() % i > 0)
-			threads = imageFiles.size();*/
+	else if (imageFiles.size() % 2 > 0) //if the number is odd
+		for (int i = 1; i < maxNum; i++) //start from 1
+		{
+			//if the remainder of a number divided by the thread size is 0
+			//also making sure it doesn't divide by itself, or by 2
+			if (imageFiles.size() % i == 0 && i != imageFiles.size() && i != imageFiles.size() / 2)
+			{
+				threads = i;
+				cout << threads << "\n\n";
+			}
+		}
 
 	cout << "\n\n";
 
