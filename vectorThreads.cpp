@@ -36,7 +36,12 @@ void main()
 
 
 	int maxNum = 50;
-	if (imageFiles.size() % 2 == 0) //the number is even
+
+	if (imageFiles.size() == 1 || imageFiles.size() == 2) //the number is even
+	{
+		threads = 1;
+	}
+	else if (imageFiles.size() % 2 == 0) //the number is even
 		for (int i = 2; i < maxNum; i++) //avoid dividing the number by 1, continue up from 2
 		{
 			//if the remainder of a number divided by the thread size is 0
