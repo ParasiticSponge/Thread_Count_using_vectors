@@ -33,6 +33,16 @@ void main()
 	imageFiles.push_back(8);
 	imageFiles.push_back(9);
 	imageFiles.push_back(10);
+	imageFiles.push_back(1);
+	imageFiles.push_back(2);
+	imageFiles.push_back(3);
+	imageFiles.push_back(4);
+	imageFiles.push_back(5);
+	imageFiles.push_back(6);
+	imageFiles.push_back(7);
+	imageFiles.push_back(8);
+	imageFiles.push_back(9);
+	imageFiles.push_back(10);
 
 	int maxNum = 50;
 	for (int i = 2; i < maxNum; i++) //avoid dividing the number by 1, continue up from 2
@@ -41,9 +51,12 @@ void main()
 		if (imageFiles.size() % i == 0 && i != imageFiles.size())
 		{
 			threads = i;
+			cout << threads << "\n\n";
 		}
-		/*else
+		/*else if (imageFiles.size() % i > 0)
 			threads = imageFiles.size();*/
+
+	cout << "\n\n";
 
 	int THREAD_COUNT = threads; //find the best number divided by the vector size
 	//cout << "There are " << THREAD_COUNT << " files per thread count\n";
@@ -52,10 +65,15 @@ void main()
 	thread* myThreads = new thread[THREAD_COUNT];
 
 	int lowLimit = 0;
-	//upperLimit = 2
-	int upperLimit = imageFiles.size() / threads; // 10 / 5 = 2
 
-	for (int i = 0; i < THREAD_COUNT; i++) //from 0 to 2
+	//upperLimit = 2
+	//upper limit is how many values should be stored in each thread, evenly distributed between threads.
+	int upperLimit = imageFiles.size() / threads;
+
+	//keep a variable that stores the count of each thread to increase by after each iteration of the loop
+	const int increasingLimit = upperLimit;
+
+	for (int i = 0; i < THREAD_COUNT; i++) //from 0 to 5
 	{
 		*myThreads = thread(count, lowLimit, upperLimit); //from [0] to [1]
 		cout << "\n\n";
@@ -64,8 +82,7 @@ void main()
 		//move onto the next thread
 		myThreads++;
 
-		//lowLimit = 
-		/*lowLimit += THREAD_COUNT;
-		upperLimit += THREAD_COUNT;*/
+		lowLimit += increasingLimit; //add 2 to lowerLimit
+		upperLimit += increasingLimit; //add 2 to upperLimit
 	}
 }
